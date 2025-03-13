@@ -9,3 +9,7 @@ Currently, two official plugins are available:
 
 # API ExchangeRate-API
 convert currency via API and shown
+
+# website link
+https://sensational-banoffee-aa827f.netlify.app/
+
