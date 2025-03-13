@@ -1,0 +1,52 @@
+.back{
+    background-color: rgb(43, 43, 43);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+.card{
+    background-color: white;
+    padding: 20px 50px;
+    border-radius: 10px;
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    box-shadow: rgba(209, 209, 211, 0.2) 0px 7px 29px 0px;
+    gap: 20px;
+    & input,select{
+        padding: 10px 20px;
+    }
+    & div:nth-child(1){
+        text-align: center;
+        border-bottom: 2px solid black;
+        color: rgb(42, 217, 159);
+    }
+    & div:nth-child(4){
+        margin: auto;
+    }
+    & div:nth-child(5){
+        margin: auto;
+    }
+}
+.flex-two{
+    display: flex;
+    justify-content: space-between;
+}
+.btn{
+    padding: 10px 30px;
+    background-color: aquamarine;
+    border: none;
+    font-size: 17px;
+    &:disabled{
+        background-color: rgb(155, 155, 155);
+    }
+    &:not(:disabled):hover{
+        scale: 1.05;
+        transition: all 0.5s ease;
+        background-color: aqua;
+    }
+}
