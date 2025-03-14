@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import style from './currency.module.css'
-import { convertCurr } from '../api'
+import { convertCurr } from '../API/api'
 
 function Currency() {
 const [amount,setAmount] =useState(0)
@@ -21,7 +21,6 @@ const [err,setError] =useState()
             setError(error)
             console.log(error)
         }
-
     }
   return (
     <div className={style.back}>

@@ -1,9 +1,9 @@
-import Currency from "./API/Currency/Currency"
+import Currency from "./Currency/Currency"
 
 function App() {
   return (
     <>
-      <Currency></Currency>
+      <Currency/>
     </>
   )
 }
