@@ -1,25 +1,22 @@
 import React, { useState } from 'react'
 import style from './currency.module.css'
 import { convertCurr } from '../API/api'
+import {useQuery} from '@tanstack/react-query'
 
 function Currency() {
-const [amount,setAmount] =useState(0)
-const [convAmt,convAmount] =useState(null)
-const [from,setFrom]= useState('INR')
-const [to,setTo]= useState('USD')
-const [loading,setLoading] =useState(false)
-const [err,setError] =useState()
 
-    const handleConvert=async ()=>{
-        try {
-            setLoading(true)
-            const res= await convertCurr(from,to,amount)
-            console.log(res)
-            convAmount(res.data.conversion_result)
-            setLoading(false)
-        } catch (error) {
-            setError(error)
-            console.log(error)
+    const [amount,setAmount] =useState(0)
+    const [from,setFrom]= useState('INR')
+    const [to,setTo]= useState('USD')
+    
+    const {data:convAmt,isLoading,isError,error,refetch}= useQuery({
+        queryKey:['currency'],
+        queryFn:()=>convertCurr(from,to,amount),
+        enabled:false,
+    })
+    const handleConvert=()=>{
+        if(amount >0){
+            refetch()
         }
     }
   return (
@@ -31,35 +28,33 @@ const [err,setError] =useState()
             <div>
                 <label htmlFor="">Amount <input 
                     type="number" value={amount} 
-                    onChange={e=>{
-                        setAmount(e.target.value)
-                        convAmount(null)}
+                    onChange={e=>setAmount(e.target.value)
                     } />
                 </label>
             </div>
             <div className={style['flex-two']}>
                 <label htmlFor="">From {" "}   
                     <select onChange={e=>setFrom(e.target.value)}>
-                        <option value="INR">INR</option>
-                        <option value="USD">USD</option>
-                        <option value="EUR">EUR</option>
-                        <option value="GBP">GBP</option>
-                        <option value="AUD">AUD</option>
+                        {
+                            ["INR","USD","EUR","GBP","AUD"].map((curr,index)=>{
+                                return <option key={index} value={curr}>{curr}</option>
+                            })
+                        }
                     </select>
                 </label>
                 <label htmlFor=""> To {" "} 
                     <select onChange={e=>setTo(e.target.value)}>
-                        <option value="USD">USD</option>
-                        <option value="INR">INR</option>
-                        <option value="EUR">EUR</option>
-                        <option value="GBP">GBP</option>
-                        <option value="AUD">AUD</option>
+                        {
+                            ["USD","INR","EUR","GBP","AUD"].map((curr,index)=>{
+                                return <option key={index} value={curr}>{curr}</option>
+                            })
+                        }
                     </select>
                 </label>
             </div>
             <div>
-                <button onClick={handleConvert} disabled={loading || amount <= 0} className={style.btn}>
-                    {loading ? "Converting...":"Convert"}</button>
+                <button onClick={handleConvert} disabled={isLoading || amount <= 0} className={style.btn}>
+                    {isLoading ? "Converting...":"Convert"}</button>
             </div>
             {
                 convAmt && <div>
@@ -67,8 +62,8 @@ const [err,setError] =useState()
                 </div>
             }
             {
-                err && <div>
-                    <h1>{err.message}</h1>
+                isError && <div>
+                    <h1>{error.message}</h1>
                 </div>
             }
         </section>
